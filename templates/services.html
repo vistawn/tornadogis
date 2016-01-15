@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>Services List</h1>
+        <h2>service count: {{len(serviceDict)}}</h2>
+        <ul>
+        {% for key in serviceDict %}
+        <li>
+        	<a href="/services/{{key}}">
+        		{{key}}
+        	</a>
+        </li>
+        {% end %}
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+    <body>
+        <h1>Service:{{service["name"]}}</h1>
+        default scale: 1:{{service["default_scale"]}}
+        <p/>
+        wkid: {{service["wkid"]}}
+        <p/>
+        default extent:
+        <ul>
+            <li>xmin: {{service["default_extent"]["xmin"]}}</li>
+            <li>ymin: {{service["default_extent"]["ymin"]}}</li>
+            <li>xmax: {{service["default_extent"]["xmax"]}}</li>
+            <li>ymax: {{service["default_extent"]["ymax"]}}</li>
+        </ul>
+        <p/>
+
+        Layers: {{len(service["layers"])}}
+        <ul>
+        {% set i = 0 %}
+        {% for layer in service["layers"] %}
+            <li>
+                <a href="/services/{{service["name"]}}/{{i}}">
+                    {{layer["layername"]}} ({{i}})
+                    {%  set i=i+1 %}
+                </a>
+            </li>
+        {% end %}
+        </ul>
+    </body>
+</html>
