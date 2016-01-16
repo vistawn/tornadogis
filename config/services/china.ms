@@ -33,13 +33,17 @@
 			"datasource":{
 				"workspace":"postgis_1"
 			},
-			"style": {
-	            "weight": 2,
-	            "color": "#999",
-	            "opacity": 1,
-	            "fillColor": "#B0DE5C",
-	            "fillOpacity": 0.8
-        	}
+			"renderer":{
+				"type":"single",
+				"style": {
+		            radius: 4,
+					fillColor: "#ff7800",
+					color: "#000",
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 0.8
+	        	}
+	        }
 		},
 		{
 			"layername":"river_line",
@@ -48,7 +52,15 @@
 			"max_scale":0,
 			"datasource":{
 				"workspace":"postgis_1"
-			}
+			},
+			"renderer":{
+				"type":"single",
+				"style": {
+		            "color": '#f00',
+		            "weight": 4, 
+		            "opacity": 0.4
+	        	}
+	        }
 		},
 		{
 			"layername":"railway_line",
@@ -57,7 +69,15 @@
 			"max_scale":0,
 			"datasource":{
 				"workspace":"postgis_1"
-			}
+			},
+			"renderer":{
+				"type":"single",
+				"style": {
+		            "color": '#f00',
+		            "weight": 4, 
+		            "opacity": 0.4
+	        	}
+	        }
 		},
 		{
 			"layername":"mainroad_line",
@@ -66,7 +86,15 @@
 			"max_scale":0,
 			"datasource":{
 				"workspace":"postgis_1"
-			}
+			},
+			"renderer":{
+				"type":"single",
+				"style": {
+		            "color": '#f00',
+		            "weight": 4, 
+		            "opacity": 0.4
+	        	}
+	        }
 		},
 		{
 			"layername":"prefecture_polygon",
@@ -75,7 +103,17 @@
 			"max_scale":0,
 			"datasource":{
 				"workspace":"postgis_1"
-			}
+			},
+			"renderer":{
+				"type":"single",
+				"style": {
+					"weight": 2,
+	                "color": "#999",
+	                "opacity": 1,
+	                "fillColor": "#B0DE5C",
+	                "fillOpacity": 0.8
+	        	}
+	        }
 		},
 		{
 			"layername":"province_polygon",
@@ -84,7 +122,17 @@
 			"max_scale":900000,
 			"datasource":{
 				"workspace":"postgis_1"
-			}
+			},
+			"renderer":{
+				"type":"single",
+				"style": {
+		            "weight": 2,
+	                "color": "#999",
+	                "opacity": 1,
+	                "fillColor": "#B0DE5C",
+	                "fillOpacity": 0.8
+	        	}
+	        }
 		}
 	]
 }
