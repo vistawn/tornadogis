@@ -2,8 +2,10 @@
 import settings
 import glob,os
 import json
+import db.dbop
+import layer
 
-serviceDict=dict()
+serviceDict={}
 
 
 def startServer():
@@ -12,7 +14,7 @@ def startServer():
 
 
 def reloadServices():
-    serviceDict=dict()
+    serviceDict={}
     getServices()
 
     print "services reloaded..."
@@ -23,6 +25,13 @@ def getServices():
     for f in service_files:
         servicename = os.path.split(f)[1][:-3]
         jfile = open(f)
-        serviceDict[servicename] = json.load(jfile)
+        service_json = json.load(jfile)
+        serviceWorkspaces = openWorkspace(servicename,service_json)
+        serviceDict[servicename] = service_json
         jfile.close()
+
+def openWorkspace(servicename,service_json):
+    workspaceconfig = service_json["workspace"]
+    for x in workspaceconfig:
+        db.dbop.connectdb(servicename,x,workspaceconfig[x])
 

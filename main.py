@@ -3,10 +3,9 @@
 import os,sys,datetime
 import tornado.ioloop
 import tornado.web
-from db import dbop
 import urls
 import settings as setting_const
-import services.services
+import server.server
 
 
 reload(sys)
@@ -35,7 +34,7 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self,handlers,**settings)
 
-        services.services.startServer()
+        server.server.startServer()
 
 
 if __name__ == "__main__":

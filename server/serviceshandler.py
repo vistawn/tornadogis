@@ -2,7 +2,8 @@
 
 import os,glob
 import json
-import services
+import server
+import layer
 import settings
 import tornado
 import db.dbop
@@ -24,7 +25,6 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
     def get(self,path):
         self.set_header("Access-Control-Allow-Origin", "*")
         paths = path.split('/')
-        print paths
         path_len = len(paths)
         if path_len == 1:
             self.getServiceInfo(paths[0])
@@ -44,32 +44,40 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
 
     def getServiceInfo(self,service_name):
         exp = self.get_argument("export",[])
-        print exp
         if exp <> []:
             self.getFeatureMap(service_name)
         else:
-            service_json = services.serviceDict[service_name]
+            service_json = server.serviceDict[service_name]
             self.render("service_info.html",service = service_json)
 
 
     def getLayerInfo(self,service_name,layerid):
-        service_json = services.serviceDict[service_name]
+        service_json = server.serviceDict[service_name]
         layer = service_json["layers"][int(layerid)]
         self.render("layer_info.html",layer=layer)
 
     def queryLayer(self,service_name,layerid):
-        service_json = services.serviceDict[service_name]
+        service_json = server.serviceDict[service_name]
         layer = service_json["layers"][int(layerid)]
         bbox = self.get_argument("bbox")
-        self.write(db.dbop.fetch_json_with_bbox(layer["layername"],bbox))
+        self.write(db.dbop.fetch_json_with_bbox(service_json,int(layerid),layer["layername"],bbox))
 
     def getFeatureMap(self,service_name):
         bbox = self.get_argument('bbox')
-        service_json = services.serviceDict[service_name]
-        print service_json["layers"]
-
-
-        self.write(service_name +  "  " + bbox)
+        service_json = server.serviceDict[service_name]
+        index=0
+        output = []
+        for x in service_json["layers"]:
+            j = db.dbop.fetch_json_with_bbox(service_json,index,x["layername"],bbox)
+            if x["layername"] == "prefecture_polygon":
+                j["style"] = {"weight": 2,
+                "color": "#999",
+                "opacity": 1,
+                "fillColor": "#B0DE5C",
+                "fillOpacity": 0.8}
+            output.append(j)
+        #print output
+        self.write(json.dumps(output))
 
 
 

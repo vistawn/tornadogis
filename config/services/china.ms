@@ -11,7 +11,14 @@
 	"workspace":{
 		"postgis_1":{
 			"type":"postgis",
-			"host":"127.0.0.1",
+			"host":"10.211.55.8",
+			"dbname":"gisdb",
+			"user":"postgres",
+			"password":"admin"
+		},
+		"postgis_2":{
+			"type":"postgis",
+			"host":"10.211.55.8",
 			"dbname":"gisdb",
 			"user":"postgres",
 			"password":"admin"
@@ -24,9 +31,15 @@
 			"min_scale":0,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"province_city_point"
-			}
+				"workspace":"postgis_1"
+			},
+			"style": {
+	            "weight": 2,
+	            "color": "#999",
+	            "opacity": 1,
+	            "fillColor": "#B0DE5C",
+	            "fillOpacity": 0.8
+        	}
 		},
 		{
 			"layername":"river_line",
@@ -34,8 +47,7 @@
 			"min_scale":2000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"river_line"
+				"workspace":"postgis_1"
 			}
 		},
 		{
@@ -44,8 +56,7 @@
 			"min_scale":15000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"railway_line"
+				"workspace":"postgis_1"
 			}
 		},
 		{
@@ -54,8 +65,7 @@
 			"min_scale":15000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"mainroad_line"
+				"workspace":"postgis_1"
 			}
 		},
 		{
@@ -64,8 +74,7 @@
 			"min_scale":900000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"prefecture_polygon"
+				"workspace":"postgis_1"
 			}
 		},
 		{
@@ -74,8 +83,7 @@
 			"min_scale":0,
 			"max_scale":900000,
 			"datasource":{
-				"workspace":"postgis_1",
-				"tablename":"province_polygon"
+				"workspace":"postgis_1"
 			}
 		}
 	]

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import tornado
-from services import serviceshandler
+from server import serviceshandler
 
 handlers = [
     (r"/",serviceshandler.MainHandler),
