@@ -1,25 +1,23 @@
 # -*- coding:utf-8 -*-
+import collections
 
-class service(object):
+class Service(object):
     service_name = ''
-    layers = []
-    def __init__(self,service_name):
-        service_name = service_name
-
-class render(object):
-    render_type=''
-    styles = {}
+    servicejson = {}
+    layers = collections.OrderedDict()
+    def __init__(self,in_service_name,in_service_json):
+        self.service_name = in_service_name
+        self.servicejson = in_service_json
 
 
-class layer(object):
+class Layer(object):
     layer_name = ''
     workspace = ''
     tablename = ''
-    render = render()
-    def __init__(self,layername,workspacename,tablename):
+    min_scale = 0
+    max_scale = 0
+    render = None  
+    cursor = None
+    def __init__(self,layername):
         layer_name = layername
-        workspace = workspacename
-        tablename = tablename
 
-    def set_style(self,fieldname,style):
-        render.styles[fieldname] = style

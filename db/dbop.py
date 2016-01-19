@@ -3,8 +3,8 @@ import psycopg2
 
 conns = dict()
 
-def fetch_json_with_bbox(service_json,layerid,tablename, bbox):
-    cur = conns[service_json["name"] + "_" + service_json["layers"][layerid]["datasource"]["workspace"]]
+def fetch_json_with_bbox(servicename,workspacename,tablename, bbox):
+    cur = conns[servicename + "_" + workspacename]
 
     sql = "select row_to_json(fc)" \
           " FROM (select 'FeatureCollection' As type, array_to_json(array_agg(f)) As features" \
@@ -13,7 +13,7 @@ def fetch_json_with_bbox(service_json,layerid,tablename, bbox):
           ") As l)) As properties FROM %s" \
           " As lg where ST_Intersects(geom,ST_MakeEnvelope(%s" \
           "))) As f )  As fc;" %(fetch_column_names(cur,tablename), str(tablename),str(bbox))
-    print sql
+    #print sql
     cur.execute(sql)
     rows = cur.fetchall()
     for row in rows:

@@ -34,7 +34,7 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self,handlers,**settings)
 
-        server.server.startServer()
+        server.server.start_server()
 
 
 if __name__ == "__main__":

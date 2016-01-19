@@ -31,17 +31,18 @@
 			"min_scale":0,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"province_city_point"
 			},
 			"renderer":{
 				"type":"single",
 				"style": {
-		            radius: 4,
-					fillColor: "#ff7800",
-					color: "#000",
-					weight: 1,
-					opacity: 1,
-					fillOpacity: 0.8
+		            "radius": 8,
+					"fillColor": "#ff7800",
+					"color": "#F00",
+					"weight": 1,
+					"opacity": 1,
+					"fillOpacity": 0.8
 	        	}
 	        }
 		},
@@ -51,14 +52,15 @@
 			"min_scale":2000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"river_line"
 			},
 			"renderer":{
 				"type":"single",
 				"style": {
-		            "color": '#f00',
-		            "weight": 4, 
-		            "opacity": 0.4
+		            "color": "#0f0",
+		            "weight": 2, 
+		            "opacity": 1
 	        	}
 	        }
 		},
@@ -68,14 +70,15 @@
 			"min_scale":15000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"railway_line"
 			},
 			"renderer":{
 				"type":"single",
 				"style": {
-		            "color": '#f00',
-		            "weight": 4, 
-		            "opacity": 0.4
+		            "color": "#ff0",
+		            "weight": 2, 
+		            "opacity": 1
 	        	}
 	        }
 		},
@@ -85,14 +88,15 @@
 			"min_scale":15000000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"mainroad_line"
 			},
 			"renderer":{
 				"type":"single",
 				"style": {
-		            "color": '#f00',
-		            "weight": 4, 
-		            "opacity": 0.4
+		            "color": "#00f",
+		            "weight": 2, 
+		            "opacity": 1
 	        	}
 	        }
 		},
@@ -102,7 +106,8 @@
 			"min_scale":900000,
 			"max_scale":0,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"prefecture_polygon"
 			},
 			"renderer":{
 				"type":"single",
@@ -111,7 +116,7 @@
 	                "color": "#999",
 	                "opacity": 1,
 	                "fillColor": "#B0DE5C",
-	                "fillOpacity": 0.8
+	                "fillOpacity": 1
 	        	}
 	        }
 		},
@@ -121,16 +126,17 @@
 			"min_scale":0,
 			"max_scale":900000,
 			"datasource":{
-				"workspace":"postgis_1"
+				"workspace":"postgis_1",
+				"dataname":"province_polygon"
 			},
 			"renderer":{
 				"type":"single",
 				"style": {
 		            "weight": 2,
-	                "color": "#999",
+	                "color": "#119",
 	                "opacity": 1,
 	                "fillColor": "#B0DE5C",
-	                "fillOpacity": 0.8
+	                "fillOpacity": 1
 	        	}
 	        }
 		}

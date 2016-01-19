@@ -3,7 +3,6 @@
 import os,glob
 import json
 import server
-import layer
 import settings
 import tornado
 import db.dbop
@@ -15,7 +14,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ServicesListHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("services.html",serviceDict = services.serviceDict)
+        self.render("services.html",serviceDict = server.services)
 
 class ExportMapHandler(tornado.web.RequestHandler):
     def get(self):
@@ -27,57 +26,78 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
         paths = path.split('/')
         path_len = len(paths)
         if path_len == 1:
-            self.getServiceInfo(paths[0])
+            self.get_serviceInfo(paths[0])
         elif path_len == 2:
             if paths[1] == '':
-                self.getServiceInfo(paths[0])
+                self.get_serviceInfo(paths[0])
             else:
-                self.getLayerInfo(paths[0],paths[1])
+                self.get_layerInfo(paths[0],paths[1])
         elif path_len == 3:
             if paths[2] == 'query':
-                self.queryLayer(paths[0],paths[1])
+                self.query_layer(paths[0],paths[1])
             else:
                 self.write("Error 404")
         else:
             self.write("Error 404")
 
 
-    def getServiceInfo(self,service_name):
+    def get_serviceInfo(self,service_name):
         exp = self.get_argument("export",[])
         if exp <> []:
-            self.getFeatureMap(service_name)
+            self.get_featureMap(service_name)
         else:
-            service_json = server.serviceDict[service_name]
+            service_json = server.services[service_name].servicejson
+            print service_json
             self.render("service_info.html",service = service_json)
 
 
-    def getLayerInfo(self,service_name,layerid):
-        service_json = server.serviceDict[service_name]
+    def get_layerInfo(self,service_name,layerid):
+        service_json = server.services[service_name].servicejson
         layer = service_json["layers"][int(layerid)]
+        print layer
         self.render("layer_info.html",layer=layer)
 
-    def queryLayer(self,service_name,layerid):
-        service_json = server.serviceDict[service_name]
+    def query_layer(self,service_name,layerid):
+        service_json = server.services[service_name].servicejson
         layer = service_json["layers"][int(layerid)]
         bbox = self.get_argument("bbox")
         self.write(db.dbop.fetch_json_with_bbox(service_json,int(layerid),layer["layername"],bbox))
 
-    def getFeatureMap(self,service_name):
+    def get_featureMap(self,service_name):
         bbox = self.get_argument('bbox')
-        service_json = server.serviceDict[service_name]
+        pixel_width = self.get_argument('width')
+        geo_width = float(bbox.split(',')[2]) - float(bbox.split(',')[0])
+        scale = self.calculate_scale(geo_width,float(pixel_width))
+
+        service = server.services[service_name]
         index=0
         output = []
-        for x in service_json["layers"]:
-            j = db.dbop.fetch_json_with_bbox(service_json,index,x["layername"],bbox)
-            if x["layername"] == "prefecture_polygon":
-                j["style"] = {"weight": 2,
-                "color": "#999",
-                "opacity": 1,
-                "fillColor": "#B0DE5C",
-                "fillOpacity": 0.8}
-            output.append(j)
-        #print output
+        for layername in service.layers:
+            layer = service.layers[layername]
+            print layername
+            visible = False
+            if layer.min_scale > 0 and layer.max_scale > 0:
+                if scale < layer.min_scale and scale > layer.max_scale:
+                    visible = True
+
+            if layer.min_scale > 0 and layer.max_scale ==0:
+                if scale <layer.min_scale:
+                    visible = True
+            if layer.max_scale > 0 and layer.min_scale ==0:
+                if scale > layer.max_scale:
+                    visible = True
+            if layer.min_scale == 0 and layer.max_scale == 0:
+                visible = True
+
+            if visible:
+                j = db.dbop.fetch_json_with_bbox(service.service_name,layer.workspace,layer.tablename,bbox)
+                j["render"] = layer.render
+                output.append(j)
+        print "======end request======="
         self.write(json.dumps(output))
+
+    def calculate_scale(self,geo_width,pixel_width):
+        return (geo_width * 111.32 * 1000)/(pixel_width * 0.0002645833)
 
 
 
