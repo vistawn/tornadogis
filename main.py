@@ -11,6 +11,15 @@ import server.server
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+for arg in sys.argv:
+    if arg.startswith('--'):
+        param = arg[2:].split('=')[0]
+        value = arg[2:].split('=')[1]
+        if param.lower() == 'debug':
+            print param,value
+        elif param.lower() == 'log':
+            print param,value
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = urls.handlers
@@ -39,7 +48,7 @@ class Application(tornado.web.Application):
 
 if __name__ == "__main__":
     application = Application()
-    application.listen(8888)
+    application.listen(setting_const.SERVER_PORT)
     tornado.ioloop.IOLoop.instance().start()
 
 
