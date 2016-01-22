@@ -7,7 +7,7 @@ a simple GIS server based on Tornado Web framework
 3. Install psycopg2
 
 ##Start Server:
-  python main.py
+   >python main.py
 
 
 TODO:
