@@ -2,9 +2,9 @@
 a simple GIS server based on Tornado Web framework
 
 Usage:
-1. Install Python 2.7
-2. Install Tornado
-3. Install psycopg2
+1.  Install Python 2.7
+2.  Install Tornado
+3.  Install psycopg2
 
 Start Server:
   python main.py
