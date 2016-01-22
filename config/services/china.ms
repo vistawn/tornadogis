@@ -44,6 +44,14 @@
 					"opacity": 1,
 					"fillOpacity": 0.8
 	        	}
+	        },
+	        "label":{
+	        	"field":"name",
+	        	"style":{
+	        		"weight":5,
+	        		"color": "#000",
+	        		"opacity":1
+	        	}
 	        }
 		},
 		{
@@ -118,6 +126,14 @@
 	                "fillColor": "#B0DE5C",
 	                "fillOpacity": 1
 	        	}
+	        },
+	        "label":{
+	        	"field":"name",
+	        	"style":{
+	        		"weight":5,
+	        		"color": "#000",
+	        		"opacity":1
+	        	}
 	        }
 		},
 		{
@@ -137,6 +153,14 @@
 	                "opacity": 1,
 	                "fillColor": "#B0DE5C",
 	                "fillOpacity": 1
+	        	}
+	        },
+	        "label":{
+	        	"field":"name",
+	        	"style":{
+	        		"weight":5,
+	        		"color": "#000",
+	        		"opacity":1
 	        	}
 	        }
 		}
