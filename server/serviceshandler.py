@@ -61,7 +61,7 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
         service_json = server.services[service_name].servicejson
         layer = service_json["layers"][int(layerid)]
         bbox = self.get_argument("bbox")
-        self.write(db.dbop.fetch_json_with_bbox(service_json,int(layerid),layer["layername"],bbox))
+        self.write(db.dbop.fetch_json_with_bbox(service_json,int(layerid),layer["layername"],bbox,3))
 
     def get_featureMap(self,service_name):
         bbox = self.get_argument('bbox')
@@ -90,7 +90,7 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
                 visible = True
 
             if visible:
-                j = db.dbop.fetch_json_with_bbox(service.service_name,layer.workspace,layer.tablename,bbox)
+                j = db.dbop.fetch_json_with_bbox(service.service_name,layer.workspace,layer.tablename,bbox,3)
                 j["render"] = layer.render
                 output.append(j)
         print "======end request======="

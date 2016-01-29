@@ -3,16 +3,16 @@ import psycopg2
 
 conns = dict()
 
-def fetch_json_with_bbox(servicename,workspacename,tablename, bbox):
+def fetch_json_with_bbox(servicename,workspacename,tablename, bbox, digi_length):
     cur = conns[servicename + "_" + workspacename]
 
     sql = "select row_to_json(fc)" \
           " FROM (select 'FeatureCollection' As type, array_to_json(array_agg(f)) As features" \
-          " FROM (select 'Feature' As type, ST_AsGeoJSON(lg.geom)::json As geometry, row_to_json((select l " \
+          " FROM (select 'Feature' As type, ST_AsGeoJSON(lg.geom, %s)::json As geometry, row_to_json((select l " \
           " FROM (select %s " \
           ") As l)) As properties FROM %s" \
           " As lg where ST_Intersects(geom,ST_MakeEnvelope(%s" \
-          "))) As f )  As fc;" %(fetch_column_names(cur,tablename), str(tablename),str(bbox))
+          "))) As f )  As fc;" %(digi_length,fetch_column_names(cur,tablename), str(tablename),str(bbox))
     print sql
     cur.execute(sql)
     rows = cur.fetchall()
