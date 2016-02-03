@@ -2,10 +2,14 @@
 
 import os,glob
 import json
+import math
+
 import server
 import settings
 import tornado
 import db.dbop
+import util.tools
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self,*args):
@@ -75,9 +79,9 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
 
         digi_length = 0
         if precision is None:
-            precision = str(resolution)
+            precision = resolution
 
-        digi_length = self.get_precision(precision)
+        digi_length = util.tools.get_float_decimal_length(float(precision))
                     
         print digi_length
         service = server.services[service_name]
@@ -111,20 +115,6 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
         resolution = geo_width / pixel_width;
         scale = resolution * ((111.32 * 1000)/ 0.0002645833)
         return (resolution,scale)
-
-
-    def get_precision(self,fstr):
-        if fstr.find('.') >= 0:
-            decimalpart = float('0.' + fstr.split('.')[1])
-            digi = 1
-            while decimalpart < 1:
-                digi = digi + 1
-                decimalpart = decimalpart * 10
-
-            return digi
-        else:
-            return 0
-
 
 
 
