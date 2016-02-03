@@ -67,8 +67,19 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
         bbox = self.get_argument('bbox')
         pixel_width = self.get_argument('width')
         geo_width = float(bbox.split(',')[2]) - float(bbox.split(',')[0])
-        scale = self.calculate_scale(geo_width,float(pixel_width))
+        (resolution,scale) = self.calculate_resolution_and_scale(geo_width,float(pixel_width))
 
+        precision = self.get_argument('precision',None,True);
+
+        print resolution,scale
+
+        digi_length = 0
+        if precision is None:
+            precision = str(resolution)
+
+        digi_length = self.get_precision(precision)
+                    
+        print digi_length
         service = server.services[service_name]
         index=0
         output = []
@@ -90,14 +101,30 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
                 visible = True
 
             if visible:
-                j = db.dbop.fetch_json_with_bbox(service.service_name,layer.workspace,layer.tablename,bbox,3)
+                j = db.dbop.fetch_json_with_bbox(service.service_name,layer.workspace,layer.tablename,bbox,digi_length)
                 j["render"] = layer.render
                 output.append(j)
         print "======end request======="
         self.write(json.dumps(output))
 
-    def calculate_scale(self,geo_width,pixel_width):
-        return (geo_width * 111.32 * 1000)/(pixel_width * 0.0002645833)
+    def calculate_resolution_and_scale(self,geo_width,pixel_width):
+        resolution = geo_width / pixel_width;
+        scale = resolution * ((111.32 * 1000)/ 0.0002645833)
+        return (resolution,scale)
+
+
+    def get_precision(self,fstr):
+        if fstr.find('.') >= 0:
+            decimalpart = float('0.' + fstr.split('.')[1])
+            digi = 1
+            while decimalpart < 1:
+                digi = digi + 1
+                decimalpart = decimalpart * 10
+
+            return digi
+        else:
+            return 0
+
 
 
 

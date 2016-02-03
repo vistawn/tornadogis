@@ -13,7 +13,7 @@ def fetch_json_with_bbox(servicename,workspacename,tablename, bbox, digi_length)
           ") As l)) As properties FROM %s" \
           " As lg where ST_Intersects(geom,ST_MakeEnvelope(%s" \
           "))) As f )  As fc;" %(digi_length,fetch_column_names(cur,tablename), str(tablename),str(bbox))
-    print sql
+    #print sql
     cur.execute(sql)
     rows = cur.fetchall()
     for row in rows:
