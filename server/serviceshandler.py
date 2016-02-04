@@ -75,15 +75,12 @@ class ServiceInfoHandler(tornado.web.RequestHandler):
 
         precision = self.get_argument('precision',None,True);
 
-        print resolution,scale
-
         digi_length = 0
         if precision is None:
             precision = resolution
 
         digi_length = util.tools.get_float_decimal_length(float(precision))
                     
-        print digi_length
         service = server.services[service_name]
         index=0
         output = []
