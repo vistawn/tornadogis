@@ -1,23 +1,28 @@
-# tornadogis
-a simple GIS server based on Tornado Web framework
+# TornadoGIS Server
 
-##Usage:
+TornadoGIS Server is a tiny GIS server based on Tornado Web framework.
+
+## Installation
+
 1. Install Python 2.7
 2. Install Tornado
 3. Install psycopg2
+4. Start Server
 
-##Start Server:
-   >python main.py
-
-
-TODO:
-
-* 1, Log system.
-* 2, Service management API.
-* 3, Simple tiled json map export API as REST style.
-* 4, ...
+> python main.py
 
 
+
+## Features
+
+- [x] Server/Service information API
+- [x] Layer query REST API
+- [x] Simple GeoJSON map output
+
+
+- [ ] Tiled GeoJSON map output
+- [ ] Permission
+- [x] Log supported
 
 
 
