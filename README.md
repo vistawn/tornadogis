@@ -23,14 +23,16 @@ TornadoGIS Server is a tiny GIS server based on Tornado Web framework.
 - [x] Log supported
 
 ## Structure
-tornadogis    ##root folder]
-  |--Config    ##server and services file]
-  |   |--services    ##map service definition files
-  |   |--server.conf    ##gis server configuration file
-  |
-  |--db    ## database operation module
-  |--doc    ## documents
-  |--log    ## server log files
+
+```
+tornadogis    ##root folder] 
+  |--Config    ##server and services file] 
+  |   |--services    ##map service definition files 
+  |   |--server.conf    ##gis server configuration file 
+  | 
+  |--db    ## database operation module 
+  |--doc    ## documents 
+  |--log    ## server log files 
   |--server    ## 
   |--static    ## tornado framework's static files folder
   |--templates    ## tornado framework's template folder. 
@@ -38,5 +40,6 @@ tornadogis    ##root folder]
   |--main.py    ## server init
   |--settings.py    ##tornado settings
   |--urls.py    
+```
 
 
